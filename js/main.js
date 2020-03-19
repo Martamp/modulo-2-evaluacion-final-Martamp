@@ -25,11 +25,12 @@ const sectionList = document.querySelector('.section--search');
 function paintFilmList() {
   let HTMLCode = '';
   //recorremos el array para elegir la pelicula que pintamos
+  //Habra que hacerlo con uno clasico para usar el i
   for (let film of listOfFilms) {
     HTMLCode += `<li>`;
-    HTMLCode += `<div class="js-container">`;
-    HTMLCode += `<img src="${film.image.medium}" alt="${film.name}" />`;
-    HTMLCode += `<h3>${film.name}</h3>`;
+    HTMLCode += `<div class="js-container container">`;
+    HTMLCode += `<img src="${film[1].image.medium}" alt="${film[1].name}" class="film--image"/>`;
+    HTMLCode += `<h3>${film[1].name}</h3>`;
     HTMLCode += `</div>`;
     HTMLCode += `</li>`;
   }
