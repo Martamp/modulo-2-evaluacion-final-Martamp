@@ -1,5 +1,6 @@
 'use strict';
-let userSearch = document.querySelector('.js-button');
+let userSearch = document.querySelector('.js-input');
+const button = document.querySelector('.js-button');
 
 let listOfFilms = [];
 
@@ -11,12 +12,13 @@ function getDataApi() {
       console.log(listOfFilms);
     })
     .catch(function(err) {
-      console.log('Error al traer los datos del servidor');
+      console.log('Error al traer los datos del servidor', err);
     });
   paintFilmList();
-  //aqui ahy que volver a escuchar la pelicula clickada
+  //aqui hay que volver a escuchar la pelicula clickada
 }
-getDataApi();
+button.addEventListener('click', getDataApi);
+// getDataApi();
 //pintamos la pelicula con el titulo
 const sectionList = document.querySelector('.section--search');
 
@@ -34,26 +36,26 @@ function paintFilmList() {
   sectionList.innerHTML += HTMLCode;
 }
 
-function listenFilms() {
-  //hacer document query selector all para identificar la futura pelicula clickada por id
-  //creamos una constante que recoja esa clase comun
-  //hacer FOR OF para recorrer ese document ...ALL
-  //meter addEventListener dentro del for??? si, porque tengo distintas y luego as identificare en mi otra funcion
-}
+// function listenFilms() {
+//   //hacer document query selector all para identificar la futura pelicula clickada por id
+//   //creamos una constante que recoja esa clase comun
+//   //hacer FOR OF para recorrer ese document ...ALL
+//   //meter addEventListener dentro del for??? si, porque tengo distintas y luego as identificare en mi otra funcion
+// }
 
-function identifyFilm(ev) {
-  // ev.target.id la meto en otro array con push
-  //ACORDARSE DE CREAR OTRO ARRAY DONDE METER FAV
-  //PINTAR mis FILMS
-}
-//HACER LA FUNCION CON SUPER CHICHA QUE NO SE COMO VOY A HACER
+// function identifyFilm(ev) {
+//   // ev.target.id la meto en otro array con push
+//   //ACORDARSE DE CREAR OTRO ARRAY DONDE METER FAV
+//   //PINTAR mis FILMS
+// }
+// //HACER LA FUNCION CON SUPER CHICHA QUE NO SE COMO VOY A HACER
 
-function addFilm (ev){
-    const clickedFilmId = ev.target.id ;
-    for (mis films aqui){
-if (film.id es igual que clickedFilmId){
-    metemos en el array nuevo la peli y ponemos la clase al div de la pelicula
-    //mirar esto bien, otra opcion: con los indices de las films, sease esta mi pelicula en en array de fav? si es tru no hacemos nada y si es false la metemos
-}
-    }
-}
+// function addFilm (ev){
+//     const clickedFilmId = ev.target.id ;
+//     for (mis films aqui){
+// if (film.id es igual que clickedFilmId){
+//     metemos en el array nuevo la peli y ponemos la clase al div de la pelicula
+//     //mirar esto bien, otra opcion: con los indices de las films, sease esta mi pelicula en en array de fav? si es tru no hacemos nada y si es false la metemos
+// }
+//     }
+// }
