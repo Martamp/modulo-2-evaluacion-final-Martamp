@@ -12,6 +12,7 @@ function getDataApi() {
       console.log(listOfFilms);
       paintFilmList();
       listenFilms();
+      paintFavList();
     })
     .catch(function(err) {
       console.log('Error al traer los datos del servidor', err);
@@ -30,9 +31,9 @@ function paintFilmList() {
   //recorremos el array para elegir la pelicula que pintamos
 
   for (let i = 0; i < listOfFilms.length; i++) {
-    const isFavoriteClicked = favoriteList[i] !== -1;
+    const isFavoriteClicked = favoriteList.indexOf(i) !== -1;
 
-    if (isFavoriteClicked === true) {
+    if (isFavoriteClicked) {
       HTMLCode += `<li class="film--container container fav--film">`;
     } else {
       HTMLCode += `<li class="film--container container">`;
@@ -49,13 +50,32 @@ function paintFilmList() {
 
   sectionList.innerHTML += HTMLCode;
 }
+//pintar la seccion de fav
+const sectionFav = document.querySelector('.section--fav__container');
 
+function paintFavList() {
+  let HTMLFavCode = '';
+  for (let i = 0; i < favoriteList.length; i++) {
+    HTMLFavCode += `<li class="container--fav">`;
+    if (favoriteList[i].show.image === null) {
+      HTMLFavCode += `<img src="${defaultImg}" alt="${favoriteList[i].show.name}" class="film--image"/>`;
+    } else {
+      HTMLFavCode += `<img src="${favoriteList[i].show.image.medium}" alt="${favoriteList[i].show.name}" class="film--image" id="${[i]}" />`;
+    }
+    HTMLFavCode += `<h4>${favoriteList[i].show.name}</h3>`;
+
+    HTMLFavCode += `</li>`;
+  }
+
+  sectionFav.innerHTML += HTMLFavCode;
+}
+////////////EJECUTAR LA FUNCION DE ARRIBA EN API O EN PAINT HTML NORMAL???????
 function addFavorites(ev) {
-  // const isClicked = ev.target.id;
-  // const
   favoriteList.push(parseInt(ev.target.id));
-  // ev.target.classList.add('fav--film');
-  console.log('click', ev.target.id);
+
+  console.log('click', ev.target.id, favoriteList);
+  paintFilmList();
+  listenFilms();
 }
 
 function listenFilms() {
