@@ -3,38 +3,66 @@ let userSearch = document.querySelector('.js-input');
 const button = document.querySelector('.js-button');
 
 let listOfFilms = [];
-
+let favoriteList = [];
 function getDataApi() {
   fetch(`http://api.tvmaze.com/search/shows?q=${userSearch.value}`)
     .then(response => response.json())
     .then(data => {
       listOfFilms = data;
       console.log(listOfFilms);
+      paintFilmList();
+      listenFilms();
     })
     .catch(function(err) {
       console.log('Error al traer los datos del servidor', err);
     });
-  paintFilmList();
-  //aqui hay que volver a escuchar la pelicula clickada
 }
 button.addEventListener('click', getDataApi);
-// getDataApi();
-//pintamos la pelicula con el titulo
-const sectionList = document.querySelector('.section--search');
+
+//declaramos donde va metido el codigo HTML
+const sectionList = document.querySelector('.film--list');
+//conseguimos la imagen por defecto
+const defaultImg = './images/TV-image.jpg';
+//pintamos la lista de peliculas
 
 function paintFilmList() {
   let HTMLCode = '';
   //recorremos el array para elegir la pelicula que pintamos
-  //Habra que hacerlo con uno clasico para usar el i
-  for (let film of listOfFilms) {
-    HTMLCode += `<li>`;
-    HTMLCode += `<div class="js-container container">`;
-    HTMLCode += `<img src="${film[1].image.medium}" alt="${film[1].name}" class="film--image"/>`;
-    HTMLCode += `<h3>${film[1].name}</h3>`;
-    HTMLCode += `</div>`;
+
+  for (let i = 0; i < listOfFilms.length; i++) {
+    const isFavoriteClicked = favoriteList[i] !== -1;
+
+    if (isFavoriteClicked === true) {
+      HTMLCode += `<li class="film--container container fav--film">`;
+    } else {
+      HTMLCode += `<li class="film--container container">`;
+    }
+    if (listOfFilms[i].show.image === null) {
+      HTMLCode += `<img src="${defaultImg}" alt="${listOfFilms[i].show.name}" class="film--image"/>`;
+    } else {
+      HTMLCode += `<img src="${listOfFilms[i].show.image.medium}" alt="${listOfFilms[i].show.name}" class="film--image" id="${[i]}" />`;
+    }
+    HTMLCode += `<h3>${listOfFilms[i].show.name}</h3>`;
+
     HTMLCode += `</li>`;
   }
+
   sectionList.innerHTML += HTMLCode;
+}
+
+function addFavorites(ev) {
+  // const isClicked = ev.target.id;
+  // const
+  favoriteList.push(parseInt(ev.target.id));
+  // ev.target.classList.add('fav--film');
+  console.log('click', ev.target.id);
+}
+
+function listenFilms() {
+  const listenFilmList = document.querySelectorAll('.js-list-of-films');
+  for (let listenFilm of listenFilmList) {
+    listenFilm.addEventListener('click', addFavorites);
+  }
 }
 
 // function listenFilms() {
