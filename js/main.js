@@ -108,3 +108,11 @@ function listenFilms() {
 // }
 //     }
 // }
+// function addFilmList(ev) {
+//   const clickedFilmId = ev.target.id;
+
+//   if (isFavoriteClicked) {
+//     favoriteList.splice(i, 1);
+//   } else {
+//   }
+// }
