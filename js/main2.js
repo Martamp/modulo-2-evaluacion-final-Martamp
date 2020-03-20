@@ -8,7 +8,7 @@ function getDataApi() {
     .then(response => response.json())
     .then(data => {
       listOfFilms = data;
-
+      console.log(listOfFilms);
       paintFilmList();
       listenFilms();
       paintFavList();
@@ -20,6 +20,19 @@ function getDataApi() {
 button.addEventListener('click', getDataApi);
 //declaramos donde va metido el codigo HTML
 const sectionList = document.querySelector('.film--list');
+
+// function setInLocalStorage() {
+//   localStorage.setItem('favFilms', JSON.stringify(favoriteList));
+// }
+// function getLocalStorage() {
+//   const getInfo = JSON.parse(localStorage.getItem('favFilms'));
+//   if (getInfo !== null) {
+//     favoriteList = getInfo;
+//     paintFavList();
+//     listenFilms();
+//   }
+// }
+
 //conseguimos la imagen por defecto
 const defaultImg = './images/TV-image.jpg';
 //pintamos la lista de peliculas
@@ -48,42 +61,26 @@ const sectionFav = document.querySelector('.section--fav__container');
 function paintFavList() {
   let HTMLFavCode = '';
   for (let i = 0; i < favoriteList.length; i++) {
-    HTMLFavCode += `<li class="container--fav">`;
+    HTMLFavCode += `<li class="container--fav ">`;
     if (favoriteList[i].show.image === null) {
       HTMLFavCode += `<img src="${defaultImg}" alt="${favoriteList[i].show.name}" class="film--image"/>`;
     } else {
       HTMLFavCode += `<img src="${favoriteList[i].show.image.medium}" alt="${favoriteList[i].show.name}" class="film--image" id="${favoriteList[i].show.id}" />`;
     }
-    HTMLFavCode += `<h4>${favoriteList[i].show.name}</h3>`;
+    HTMLFavCode += `<h4>${favoriteList[i].show.name}</h4>`;
     HTMLFavCode += `</li>`;
   }
-  sectionFav.innerHTML = HTMLFavCode;
-  console.log('holaaaa', listOfFilms);
+  sectionFav.innerHTML += HTMLFavCode;
 }
 ////////////EJECUTAR LA FUNCION DE ARRIBA EN API O EN PAINT HTML NORMAL???????
 function addFavorites(ev) {
   // favoriteList.push(parseInt(ev.target.id));
-  const clickedFilm = ev.target.id;
-  let foundedFilm;
-  debugger;
-  for (let film of listOfFilms) {
-    if (film[i].show.id === clickedFilm) {
-      foundedFilm = film;
-      console.log('holaaaaaaaaaa');
-    }
-  }
-  const filmObject = {
-    id: foundedFilm.id,
-    name: foundedFilm.name
-  };
-
-  favoriteList.push(filmObject);
-  // console.log('click', ev.target.id, foundedFilm, favoriteList);
-
-  // paintFilmList();
-  paintFavList();
+  favoriteList.push(listOfFilms[i]);
+  console.log('click', ev.target.id, favoriteList);
+  paintFilmList();
   listenFilms();
-  // setInLocalStorage();
+  paintFavList();
+  setInLocalStorage();
 }
 function listenFilms() {
   const listenFilmList = document.querySelectorAll('.js-list-of-films');
@@ -91,7 +88,7 @@ function listenFilms() {
     listenFilm.addEventListener('click', addFavorites);
   }
 }
-
+getLocalStorage();
 // function listenFilms() {
 //   //hacer document query selector all para identificar la futura pelicula clickada por id
 //   //creamos una constante que recoja esa clase comun
